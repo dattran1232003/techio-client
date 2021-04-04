@@ -41,7 +41,7 @@ function MenuBar() {
             <Icon name='edit' />
             <span>Viết bài</span>
           </Menu.Item>
-
+          { console.log(user) }
           <Dropdown item text={ user?.username || 'Tài khoản' }>
             <Dropdown.Menu>
               { !user?.username

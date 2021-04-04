@@ -8,7 +8,6 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import { persistCacheSync, SessionStorageWrapper } from 'apollo3-cache-persist'
 import { 
   split,
-  HttpLink,
   ApolloClient,
   InMemoryCache,
   ApolloProvider,

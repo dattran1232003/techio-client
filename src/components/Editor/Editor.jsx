@@ -1,6 +1,6 @@
 import './Editor.scss'
-import React, { useState, useEffect } from 'react'
 import { Input, Button } from 'semantic-ui-react'
+import React, { useState, useEffect } from 'react'
 import { gql, useMutation } from '@apollo/react-hooks'
 
 import EditBox from './EditBox'
@@ -11,7 +11,7 @@ const Editor = ({ oldPostData, history }) => {
 
 
   const [editPost, { loading, data }] = useMutation(EDIT_POST_MUTATION, {
-    update(proxy, { data: { editPost: post } }) {
+    update(_, { data: { editPost: post } }) {
       history.push(`/posts/${post.plainTitle}`)
     }
   })
@@ -31,15 +31,13 @@ const Editor = ({ oldPostData, history }) => {
 
   const isRequiredFieldsEmpty = !postData.title || !postData.body
 
-
-
   return ( !loading &&
     <div className='writting writting__container'>
       <Input className='writting writting__text-box writting__title' 
         value={postData.title} onChange={onTitleChange}
         placeholder='Tiêu đề bài viết...'/>      
 
-      <EditBox body={postData.body} onChange={onEditorChange} />
+      <EditBox value={postData.body} onChange={onEditorChange} />
  
       <div className='writting writting__btn-container'>
         { isDraft === true

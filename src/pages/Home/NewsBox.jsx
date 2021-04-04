@@ -1,12 +1,12 @@
-import moment from 'moment'
-import { Link } from 'react-router-dom'
 import React from 'react'
+import moment from 'moment'
+import { Loading } from '@components'
+import { Link } from 'react-router-dom'
+import LoadMorePost from './LoadMorePost'
+import {  GET_TOTAL, FETCH_POSTS_QUERY } from '@util/graphql'
 import { Image, Icon, Item, Grid } from 'semantic-ui-react'
 import { gql, useQuery, useSubscription } from '@apollo/react-hooks'
 
-import LoadMorePost from './LoadMorePost'
-import { Loading } from '../../components'
-import {  GET_TOTAL, FETCH_POSTS_QUERY } from '../../util/graphql'
 import useNews from './useNews.jsx'
 
 function NewsBox() {

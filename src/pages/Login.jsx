@@ -3,9 +3,9 @@ import { Form, Button, Grid } from 'semantic-ui-react'
 import React, { useState, useContext } from 'react'
 
 // Context
-import { useForm } from '../util/hooks'
-import { AuthContext } from '../context/auth'
-import { PersistPrevLinkContext } from '../context/persistLinkContext'
+import { useForm } from '@util/hooks'
+import { AuthContext } from '@context/auth'
+import { PersistPrevLinkContext } from '@context/persistLinkContext'
 
 
 function Login(props) {

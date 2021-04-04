@@ -1,8 +1,8 @@
 import { Redirect } from 'react-router-dom'
+import { AuthContext } from '@context/auth'
 import { gql, useMutation } from '@apollo/react-hooks'
 import React, { useState, useEffect, useContext } from 'react'
 
-import { AuthContext } from '../context/auth'
 
 const NewPost = () => {
   const [postId, setPostId] = useState('')

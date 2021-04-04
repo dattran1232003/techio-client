@@ -1,10 +1,10 @@
 /* eslint react/prop-types: 0 */
 
 import React, { useContext } from 'react'
+import { AuthContext } from '@context/auth'
 import { Route, Redirect } from 'react-router-dom'
+import { PersistPrevLinkContext } from '@context/persistLinkContext'
 
-import { AuthContext } from '../context/auth'
-import { PersistPrevLinkContext } from '../context/persistLinkContext'
 
 function AuthRoute({ component: Component, ...rest }) {
   const { user } = useContext(AuthContext)

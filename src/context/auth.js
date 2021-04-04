@@ -1,24 +1,21 @@
+import { ifElse } from '@util/fp'
 import jwtDecode from 'jwt-decode'
-import { ifElse, Just, Nothing } from '../util/fp'
 import React, { useReducer, createContext } from 'react'
 
-const initialState = ((jwtToken) => {
-  const jwtDecoded = jwtToken && jwtDecode(jwtToken) 
-    ? Just(jwtDecode(jwtToken)) 
-    : Nothing()
+const initialState = (jwtToken => {
+  const jwtDecoded = !!jwtToken && jwtDecode(jwtToken) || {}
   return {
-    user: jwtDecoded
-    .map(ifElse(
-      u => u.exp * 1000 < Date.now(), // check is user expire
-      _ => Nothing(localStorage.removeItem('jwtToken')), // expired, return Nothing
-      u => Just(u) // valid, return user
-    ))
+    user: ifElse(
+      ({ exp }) => exp * 1000 <= Date.now(), // check is user expire
+      _ => localStorage.removeItem('jwtToken') || {}, // expired, return Nothing
+      u => u, // valid, return user
+    jwtDecoded)
   }
 })(localStorage.getItem('jwtToken'))
 
 const AuthContext = createContext({
   user: {},
-  login: userData => {},
+  login: _ => {},
   logout: () => {}
 })
 
@@ -26,10 +23,10 @@ function authReducer(state, action) {
   switch(action.type) {
     case 'LOGIN': return {
       ...state,
-      user: Just(action.payload)
+      user: action.payload
     }
     case 'LOGOUT': return {
-      user: Nothing()
+      user: {}
     }
     default:
       return state
@@ -53,7 +50,7 @@ function AuthProvider(props) {
   }
 
   return <AuthContext.Provider
-    value={{ user: state.user.unwrap(), login, logout }}
+    value={{ user: state.user, login, logout }}
     {...props}
   />
 }

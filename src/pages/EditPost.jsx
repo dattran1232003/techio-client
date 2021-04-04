@@ -2,8 +2,8 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useParams, Redirect } from 'react-router-dom'
 
-import { Editor } from '../components' 
-import { GET_POST } from '../util/graphql'
+import { Editor } from '@components' 
+import { GET_POST } from '@util/graphql'
 
 const EditPost = props => {
   const { plainTitle } = useParams()

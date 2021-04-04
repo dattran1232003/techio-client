@@ -1,4 +1,10 @@
 .writting__editbox-container {
+  span.token.title.important {
+      font-family: inherit;
+    .token.punctuation {
+      font-family: inherit;
+    }
+  }
   border: thick dashed transparentize(#696969, 1);
   &.image-over {
     border: thick dashed transparentize(#696969, .6);
