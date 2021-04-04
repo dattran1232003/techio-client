@@ -1,0 +1,6 @@
+.writting__editbox-container {
+  border: thick dashed transparentize(#696969, 1);
+  &.image-over {
+    border: thick dashed transparentize(#696969, .6);
+  }
+}

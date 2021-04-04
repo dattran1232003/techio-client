@@ -1,0 +1,111 @@
+$base-color: #109c35;
+$green-color: #32a852;
+
+@import 'scss/btn';
+
+h1, h2, h3, h4, h5, h6,
+span, p, strong {
+  font-family: 'Open Sans', Roboto, sans-serif;
+}
+
+.header {
+  .item {
+    .icon { margin: 0; }
+    span { display: none; }
+    .user-button span { display: inline-block; color: #000000 !important; }
+    &::before { // For seperate lines
+      top: 50% !important;
+      transform: translateY(-50%) !important; 
+      height: 60% !important;
+    }
+  }
+  &__main-logo {
+    span {
+      display: inline-block !important;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
+}
+
+.super {
+  &__container {
+    width: 100% !important;
+    &--right {
+      display: none !important;
+    }
+  }
+}
+
+.btn {
+  &--custom {
+    font-family: 'Open Sans', Roboto, sans-serif !important;
+  }
+  &--center {
+    margin: 0 auto !important;
+  }
+  &--rounded {
+    border-radius: 3rem !important;
+  }
+  &--big {
+    padding: -3rem 2rem !important;
+  }
+  
+}
+
+.paginate {
+  width: 96%;
+  margin: 0 auto !important;
+  justify-content: center;
+  border: none !important;
+  &__top {
+
+  }
+  &__bottom {
+    a.item.active {
+      border-bottom: none !important;
+      border-top: 2px solid rgb(27, 28, 29) !important;
+    }
+  }
+}
+
+.strong {
+  font-weight: bold;
+  &__title {
+    color: #32a852 !important;
+    &--biggest {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .header {
+    .item {
+      span { display: inline-block; }
+    }    
+  }
+  .form-container {
+    max-width: 65%;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .super {
+    &__container {
+      &--left {
+        width: 70% !important;
+      }
+      &--right {
+        display: inline-flex !important;
+        width: 30% !important;
+      }
+    }
+  }
+
+  .form-container {
+    max-width: 45%;
+    margin: 0 auto;
+  }
+}

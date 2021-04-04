@@ -1,0 +1,18 @@
+.writting {
+    margin-bottom: .3rem;
+  &__container {
+    margin-top: 1.5rem;
+    
+  }
+  &__text-box {
+    width: 100%;
+    input {
+      border: none !important; 
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  }
+  &__btn-container {
+    margin-top: .6rem;
+  }
+}

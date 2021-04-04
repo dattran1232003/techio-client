@@ -1,0 +1,28 @@
+// Basic button 
+
+.btn {
+  background-color: transparent;
+  cursor: pointer;
+  &--large {
+    padding: 1.2rem 0;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+  }
+  &--medium {
+    padding: 1rem 0;
+    font-size: 1rem;
+    line-height: 1rem;
+  }
+  &--full-width { width: 100%; }
+  &--border {
+    &-none { border: none; }
+  }
+  &__loadmore {
+    width: calc(100% - 2rem);
+    border-radius: .28571429rem ;
+    margin: 0 auto;
+    &:hover {
+      background-color: transparentize(#8a8a8a, .7);
+    }
+  }
+}
