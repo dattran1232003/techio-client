@@ -16,7 +16,8 @@ const initialState = (jwtToken => {
 const AuthContext = createContext({
   user: {},
   login: _ => {},
-  logout: () => {}
+  logout: () => {},
+  changeAvatar: _ => {},
 })
 
 function authReducer(state, action) {
@@ -27,6 +28,13 @@ function authReducer(state, action) {
     }
     case 'LOGOUT': return {
       user: {}
+    }
+    case 'CHANGE_AVATAR': return {
+      ...state,
+      user: {
+        ...state.user,
+        avatarURL: action.payload
+      }
     }
     default:
       return state
@@ -49,8 +57,14 @@ function AuthProvider(props) {
     dispatch({ type: 'LOGOUT' })
   }
 
+  function changeAvatar(avatarURL=
+    'https://res.cloudinary.com/dd2ryr5fy/image/upload/v1617774801/techio/images/avatars/default-avatar_bxm3wr.png'
+  ) {
+    dispatch({ type: 'CHANGE_AVATAR', payload: avatarURL })
+  }
+
   return <AuthContext.Provider
-    value={{ user: state.user, login, logout }}
+    value={{ user: state.user, login, logout, changeAvatar }}
     {...props}
   />
 }

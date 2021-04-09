@@ -18,4 +18,5 @@
         "no-unused-vars": ["warn", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
         "react/prop-types": 0
     }
+    
 }

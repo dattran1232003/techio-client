@@ -1,0 +1,34 @@
+.avatar {
+  &__uploader {
+    margin-bottom: 2rem;
+  }
+  &__editor {
+    .ReactCrop { img { max-width: 100%; } }
+  }
+  &__previewer {
+    display: none;
+  }
+}
+
+/*== TABLET SCREEN AND LARGER */
+@media screen and (min-width: 768px) {
+  .avatar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    &__editor {
+        width: 60%;
+    }
+    &__previewer {
+      width: 30%;
+      display: block;
+      canvas { margin-top: 25%; width: 100%; }
+    }
+  }
+}
+
+
+/*== LAPTOP SCREEN AND LARGER */
+@media screen and (min-width: 1024px) {
+
+}
