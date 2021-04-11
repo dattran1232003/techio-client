@@ -3,10 +3,10 @@ import jwtDecode from 'jwt-decode'
 import React, { useReducer, createContext } from 'react'
 
 const initialState = (jwtToken => {
-  const jwtDecoded = !!jwtToken && jwtDecode(jwtToken) || {}
+  const jwtDecoded = jwtToken ? jwtDecode(jwtToken) : {}
   return {
     user: ifElse(
-      ({ exp }) => exp * 1000 <= Date.now(), // check is user expire
+      (decoded) => decoded?.exp * 1000 <= Date.now(), // check is user expire
       _ => localStorage.removeItem('jwtToken') || {}, // expired, return Nothing
       u => u, // valid, return user
     jwtDecoded)

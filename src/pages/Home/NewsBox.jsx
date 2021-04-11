@@ -37,45 +37,47 @@ function NewsBox() {
     posts.length > 0 && dispatch({ type: 'LOAD_POSTS', posts })
   }, [posts])
 
-  const handleLoadMorePosts = _ => fetchMore({
+  const handleLoadMorePosts = React.useCallback(_ => fetchMore({
     variables: { 
       offset: newsData.posts.length,
       limit: 10
     },
   })
-
-
+)
 
   return (
     <Grid className='posts posts__container'>
       { loading
         ? <Loading />
         : <>
-          { newsData.posts.map((
-            { title, plainTitle, shortBody, likeCount, commentCount, createdAt }
-          ) => 
-            <Grid.Row key={plainTitle} columns={2} className='posts__single-post'>
-              <span className='posts__image'>
-                <Image loading='lazy' size='mini' avatar src='//picsum.photos/200' />
-              </span>
+          { 
+            newsData.posts.map((
+              { title, plainTitle, shortBody, likeCount, commentCount, createdAt }
+            ) => 
+              <Grid.Row key={plainTitle} columns={2} className='posts__single-post'>
+                <span className='posts__image'>
+                  <Image loading='lazy' size='mini' avatar src='//picsum.photos/200' />
+                </span>
 
-              <Item className='posts__content'>
-                <Item.Header className='posts__header posts__header--headline'
-                  as={Link} to={ `/posts/${plainTitle}` }
-                >{ title }</Item.Header>
+                <Item className='posts__content'>
+                  <Item.Header className='posts__header posts__header--headline'
+                    as={Link} to={ `/posts/${plainTitle}` }
+                  >{ title }</Item.Header>
 
-                <Item.Meta className='posts__meta'
-                >{moment(createdAt).fromNow(true)}</Item.Meta>
+                  <Item.Meta className='posts__meta'
+                  >{moment(createdAt).fromNow(true)}</Item.Meta>
 
-                <Item.Description className='posts__description'>{shortBody}</Item.Description>
+                  <Item.Description className='posts__description'>{shortBody}</Item.Description>
 
-                <Item.Extra className='posts__button--wrapper'>
-                  {likeCount} <Icon className='btn btn__in-post btn__like-post' name='thumbs up'/>
-                  {commentCount} <Icon className='btn btn__in-post btn__comment-post' name='comments' />
-                </Item.Extra>
-              </Item>
-            </Grid.Row>
-            )}
+                  <Item.Extra className='posts__button--wrapper'>
+                    {likeCount} <Icon className='btn btn__in-post btn__like-post' name='thumbs up'/>
+                    {commentCount} <Icon className='btn btn__in-post btn__comment-post' name='comments' />
+                  </Item.Extra>
+                </Item>
+              </Grid.Row>
+            )
+          }
+
           { console.log(newsData.posts.length) }
           <LoadMorePost 
             disabled={newsData.posts.length >= newsData.total} 

@@ -1,57 +1,47 @@
 import React from 'react'
 import { useForm } from '@util/hooks'
 import { UploadAvatar } from '@components'
-import { AuthContext } from '@context/auth'
 import { Grid, Form, Button } from 'semantic-ui-react'
-import { gql, useMutation } from '@apollo/react-hooks'
-import { PersistPrevLinkContext } from '@context/persistLinkContext'
 import { validateUserRegister, compare2Password } from '@util/validate'
 
 function Register(props) {
-  // Defind contexts
-  const { login } = React.useContext(AuthContext)
-  const { prevLink } = React.useContext(PersistPrevLinkContext) 
   // Defind states
   const [errors, setErrors] = React.useState([])
   const [confirmBoxOpening, setConfirmBoxOpen] = React.useState(false)
 
   const initValue = { email: '', username: '', password: '', confirmPassword: '' } 
-  const { onChange, onSubmit, values: userInputData } = useForm(registerCallback, initValue)
+  const { onChange, onSubmit, values: userInputData } = useForm(openAvatarCallback, initValue)
 
-  const [registerUser, { loading }] = useMutation(REGISTER_MUTATION, {
-    update(_, { data: { register: userData } }) {
-      login(userData)
-      setConfirmBoxOpen(true)
-    },
-    onError(err) {
-      console.error(err)
-      setErrors(
-        err?.graphQLErrors[0]?.extensions?.exception?.errors ||
-        err?.graphQLErrors[0]?.extensions?.errors || []
-      )
-    },
-  })
 
-  function registerCallback() { 
-    const { email, username, password, confirmPassword } = userInputData
-    registerUser({
-      variables: {
-        email, username, password, confirmPassword
-      },     }) 
+  function openAvatarCallback() { 
+    setConfirmBoxOpen(true)
   }
 
-  const isPasswordMatch = compare2Password(userInputData)
-  const notValidUserInput = !validateUserRegister(userInputData)
+  const listErrors = React.useCallback((err) => {
+    console.error(err)
+    setErrors(
+      err?.graphQLErrors[0]?.extensions?.exception?.errors ||
+      err?.graphQLErrors[0]?.extensions?.errors || []
+    )
+  })
+
+  const [isPasswordMatch, notValidUserInput] = React.useMemo(() => 
+    ([compare2Password(userInputData), !validateUserRegister(userInputData) ]), 
+    [...Object.values(userInputData)]
+  )
+
   return (<>
     <UploadAvatar 
       open={confirmBoxOpening} 
+      showErrorUI={listErrors}
+      userInputData={userInputData}
       confirmHandler={e => onSubmit(e)}
       cancelHandler={setConfirmBoxOpen.bind(null, false)} 
     />
 
     <Grid style={{ height:'calc(100vh - 5rem)' }} verticalAlign='middle'>
       <Grid.Column className='form-container'>
-        <Form noValidate loading={loading} onSubmit={onSubmit}>
+        <Form noValidate onSubmit={onSubmit}>
           <h1>Đăng ký</h1>
           <Form.Input required
             name='username' label='Username' placeholder='Tên đăng nhập...'
@@ -96,24 +86,5 @@ function Register(props) {
   </>)
 }
 
-const REGISTER_MUTATION = gql`
-  mutation Register(
-    $email: String!
-    $avatarURL: String
-    $username: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    register(registerInput: { 
-      email: $email
-      avatarURL: $avatarURL
-      username: $username
-      password: $password
-      confirmPassword: $confirmPassword
-    }) {
-      id token username 
-    }
-  }
-`
 
 export default Register

@@ -47,6 +47,7 @@ function UploadAvatar(props) {
     }
   }
 
+  
   return (
     <Portal 
       open={props.open}
@@ -92,26 +93,14 @@ function UploadAvatar(props) {
 
           : (
             <AvatarUploader
+              {...props}
               image={image}
               acceptImage={acceptImage}
               changeImage={dispatchImage}
+              cancelHandler={props.cancelHandler}
             />
           )
         }
-
-        <Button.Group className='btn btn__group'>
-          <Button
-            content='Huỷ'
-            onClick={props.cancelHandler}
-          />
-
-          <Button primary
-            content='Tiếp tục'
-            onClick={(e) => { 
-              setAcceptImage(true)
-            }}
-          />
-        </Button.Group>
 
         <input type='file' accept='image/jpeg, image/png'
           ref={inputRef} 

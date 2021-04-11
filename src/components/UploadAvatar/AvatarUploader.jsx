@@ -1,34 +1,47 @@
 import React from 'react'
 import './AvatarUploader.scss'
 import ReactCrop from 'react-image-crop'
+import { useRegister } from '@util/hooks'
+import { Button } from 'semantic-ui-react'
 import { AuthContext } from '@context/auth'
 import 'react-image-crop/lib/ReactCrop.scss'
 import { gql, useMutation } from '@apollo/react-hooks'
 
-export default function AvatarUploader({ image, changeImage, acceptImage }) {
+export default function AvatarUploader({ image, userInputData, showErrorUI, changeImage, cancelHandler }) {
   // use ref
   const imageRef = React.useRef(null)
   const previewCanvasRef = React.useRef(null)
 
   // defind context
-  const { user, changeAvatar } = React.useContext(AuthContext)
+  const { login } = React.useContext(AuthContext)
 
   // defind state
   const [completedCrop, setCompletedCrop] = React.useState(null)
 
+  // customHook
+  const { registerUserToServer } = useRegister({
+    successCallback(userData) {
+      console.log('register succesfully>>', userData)
+      login(userData)      
+    },
+    errorCallback(e) {
+      console.log(e)
+      showErrorUI(e)
+    }
+  })
+
   // Server communications
   const [uploadAvatarToServer, {loading}] = useMutation(UPLOAD_AVATAR_MUTATION, {
     update(_, { data: { uploadAvatar: { url: avatarURL } } }) {
+      console.log(userInputData)
+      registerUserToServer({ ...userInputData, avatarURL })
     }, 
     onError(e) { console.error(e) }
   })
 
-  // effects
-  React.useEffect(() => {
-    console.log({acceptImage})
-    // Image acceped, move next step
-    if(acceptImage) generateUpload(previewCanvasRef.current, completedCrop)
-  }, [acceptImage])
+  function uploadImage() {
+    generateUpload(previewCanvasRef.current, completedCrop)
+  }
 
   React.useEffect(() => {
     if(!completedCrop || !previewCanvasRef.current || !imageRef.current) 
@@ -71,7 +84,6 @@ export default function AvatarUploader({ image, changeImage, acceptImage }) {
     changeImage({ type: 'CHANGE_CROP', payload: { crop } })
   }
 
-
   function generateUpload(canvas, crop) {
     if(!crop || !canvas) return
 
@@ -80,6 +92,7 @@ export default function AvatarUploader({ image, changeImage, acceptImage }) {
       uploadAvatarToServer({ variables: { avatar } }) 
     }, 'image/png')
   }
+
   return (<>
     <div className='avatar avatar__uploader'>
       <div className='avatar avatar__editor'>
@@ -99,6 +112,19 @@ export default function AvatarUploader({ image, changeImage, acceptImage }) {
         <canvas ref={previewCanvasRef} />
       </div>
     </div>
+
+    <Button.Group className='btn btn__group'>
+      <Button
+        content='Huỷ'
+        onClick={cancelHandler}
+      />
+
+      <Button primary
+        content='Tiếp tục'
+        onClick={uploadImage}
+      />
+    </Button.Group>
+
   </>)
 }
 
