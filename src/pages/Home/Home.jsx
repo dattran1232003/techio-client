@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Menu } from 'semantic-ui-react'
 
 import NewsBox from './NewsBox'
+import RightMenu from './RightMenu'
 
 function Home() {
   const [tabName, setTabname] = useState('posts-recent')
@@ -30,7 +31,7 @@ function Home() {
 
 
         <Grid.Column className='super__container super__container--right'>
-          <h1>Right Container</h1>
+          <RightMenu />
         </Grid.Column>
       </Grid.Row>
     </Grid>

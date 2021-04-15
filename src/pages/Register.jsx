@@ -1,23 +1,38 @@
 import React from 'react'
 import { useForm } from '@util/hooks'
+import { useRegister } from '@util/hooks'
 import { UploadAvatar } from '@components'
+import { AuthContext } from '@context/auth'
 import { Grid, Form, Button } from 'semantic-ui-react'
 import { validateUserRegister, compare2Password } from '@util/validate'
 
 function Register(props) {
+  const { login } = React.useContext(AuthContext)
+
   // Defind states
   const [errors, setErrors] = React.useState([])
   const [confirmBoxOpening, setConfirmBoxOpen] = React.useState(false)
 
   const initValue = { email: '', username: '', password: '', confirmPassword: '' } 
-  const { onChange, onSubmit, values: userInputData } = useForm(openAvatarCallback, initValue)
+  const { onChange, onSubmit, values: userInputData } = useForm(registerCallback, initValue)
 
+  // useCustomHook
+  const { registerUserToServer } = useRegister({
+    successCallback(userData) {
+      login(userData)      
+      setConfirmBoxOpen(true)
+    },
+    errorCallback(e) {
+      console.error(e)
+      showErrorUI(e)
+    }
+  })
 
-  function openAvatarCallback() { 
-    setConfirmBoxOpen(true)
+  function registerCallback() { 
+    registerUserToServer(userInputData)
   }
 
-  const listErrors = React.useCallback((err) => {
+  const showErrorUI = React.useCallback((err) => {
     console.error(err)
     setErrors(
       err?.graphQLErrors[0]?.extensions?.exception?.errors ||
@@ -32,10 +47,10 @@ function Register(props) {
 
   return (<>
     <UploadAvatar 
+      {...props}
       open={confirmBoxOpening} 
-      showErrorUI={listErrors}
+      confirmHandler={onSubmit}
       userInputData={userInputData}
-      confirmHandler={e => onSubmit(e)}
       cancelHandler={setConfirmBoxOpen.bind(null, false)} 
     />
 
@@ -77,7 +92,7 @@ function Register(props) {
         { Object.keys(errors).length > 0  && (
           <div className="ui error message">
             <ul className="list">
-              { Object.values(errors).map(error => <li key={error[0]}>{error[0]}</li>) }
+              { Object.values(errors).map((error, i) => <li key={i}>{error[0]}</li>) }
             </ul>
           </div>
         )}

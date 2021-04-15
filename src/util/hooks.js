@@ -38,7 +38,6 @@ export const useRegister = ({ successCallback, errorCallback }) => {
       }  
     })
   }
-
   return { userData, registerUserToServer: trigger, loading }
 }
 

@@ -5,7 +5,6 @@ import { setContext } from 'apollo-link-context'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { createUploadLink } from 'apollo-upload-client'
 import { getMainDefinition } from '@apollo/client/utilities'
-import { persistCacheSync, SessionStorageWrapper } from 'apollo3-cache-persist'
 import { 
   split,
   ApolloClient,
@@ -16,10 +15,6 @@ import {
 import { typePolicies } from './util/cacheTypePolicies'
 const cache = new InMemoryCache({ typePolicies })
 
-persistCacheSync({
-  cache,
-  storage: new SessionStorageWrapper(window.sessionStorage)
-})
 
 const uploadLink = createUploadLink({
   uri: '//localhost:5000'

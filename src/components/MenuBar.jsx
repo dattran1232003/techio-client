@@ -15,6 +15,11 @@ function MenuBar() {
   const handleItemClick = (_, { name }) => setActiveItem(name)
 
   const RedirectAuthHandle = _ => setPrevLink(pathname)
+  // Memo
+  const userAvatarStyle = React.useMemo(() => ({
+    padding: 3,
+    borderRadius: '50%',
+  }), [])
 
   return (
     <div className='header' >
@@ -41,7 +46,10 @@ function MenuBar() {
             <Icon name='edit' />
             <span>Viết bài</span>
           </Menu.Item>
-          <Dropdown item text={ user?.username || 'Tài khoản' }>
+          <Dropdown item text={ user?.username
+            ? <img src={user?.avatarURL} style={userAvatarStyle} /> 
+            : 'Menu'
+            }>
             <Dropdown.Menu>
               { !user?.username
                 ? (

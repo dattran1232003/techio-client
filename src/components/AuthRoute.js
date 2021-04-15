@@ -14,7 +14,7 @@ function AuthRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={props =>
-          user?.username
+          user?.username && user?.avatarURL
             ? <Redirect to={prevLink} /> 
             : <Component {...props} />
       }

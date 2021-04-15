@@ -1,40 +1,28 @@
 import React from 'react'
 import './AvatarUploader.scss'
 import ReactCrop from 'react-image-crop'
-import { useRegister } from '@util/hooks'
 import { Button } from 'semantic-ui-react'
 import { AuthContext } from '@context/auth'
 import 'react-image-crop/lib/ReactCrop.scss'
 import { gql, useMutation } from '@apollo/react-hooks'
 
-export default function AvatarUploader({ image, userInputData, showErrorUI, changeImage, cancelHandler }) {
+export default function AvatarUploader({ image, history, changeImage, cancelHandler }) {
   // use ref
   const imageRef = React.useRef(null)
   const previewCanvasRef = React.useRef(null)
 
   // defind context
-  const { login } = React.useContext(AuthContext)
+  const { changeAvatar } = React.useContext(AuthContext)
 
   // defind state
   const [completedCrop, setCompletedCrop] = React.useState(null)
 
-  // customHook
-  const { registerUserToServer } = useRegister({
-    successCallback(userData) {
-      console.log('register succesfully>>', userData)
-      login(userData)      
-    },
-    errorCallback(e) {
-      console.log(e)
-      showErrorUI(e)
-    }
-  })
 
   // Server communications
-  const [uploadAvatarToServer, {loading}] = useMutation(UPLOAD_AVATAR_MUTATION, {
+  const [uploadAvatarToServer] = useMutation(UPLOAD_AVATAR_MUTATION, {
     update(_, { data: { uploadAvatar: { url: avatarURL } } }) {
-      console.log(userInputData)
-      registerUserToServer({ ...userInputData, avatarURL })
+      changeAvatar(avatarURL)
+      history.push('/posts')
     }, 
     onError(e) { console.error(e) }
   })

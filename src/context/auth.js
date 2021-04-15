@@ -7,9 +7,12 @@ const initialState = (jwtToken => {
   return {
     user: ifElse(
       (decoded) => decoded?.exp * 1000 <= Date.now(), // check is user expire
-      _ => localStorage.removeItem('jwtToken') || {}, // expired, return Nothing
-      u => u, // valid, return user
-    jwtDecoded)
+      _ => { 
+        localStorage.removeItem('jwtToken') 
+        return {} 
+      }, // expired, return Nothing
+      u => ({...u, avatarURL: localStorage.getItem('avatarURL') }), // valid, return user
+    )(jwtDecoded)
   }
 })(localStorage.getItem('jwtToken'))
 
@@ -29,7 +32,8 @@ function authReducer(state, action) {
     case 'LOGOUT': return {
       user: {}
     }
-    case 'CHANGE_AVATAR': return {
+    case 'CHANGE_AVATAR': 
+      return {
       ...state,
       user: {
         ...state.user,
@@ -45,7 +49,9 @@ function AuthProvider(props) {
   const [state, dispatch] = useReducer(authReducer, initialState)
 
   function login(userData) {
+    console.log(userData.avatarURL)
     localStorage.setItem('jwtToken', userData.token)
+    localStorage.setItem('avatarURL', userData.avatarURL)
     dispatch({
       type: 'LOGIN',
       payload: userData
@@ -54,12 +60,14 @@ function AuthProvider(props) {
 
   function logout() {
     localStorage.removeItem('jwtToken')
+    localStorage.removeItem('avatarURL')
     dispatch({ type: 'LOGOUT' })
   }
 
   function changeAvatar(avatarURL=
     'https://res.cloudinary.com/dd2ryr5fy/image/upload/v1617774801/techio/images/avatars/default-avatar_bxm3wr.png'
   ) {
+    localStorage.setItem('avatarURL', avatarURL)
     dispatch({ type: 'CHANGE_AVATAR', payload: avatarURL })
   }
 

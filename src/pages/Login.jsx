@@ -6,12 +6,10 @@ import { Form, Button, Grid } from 'semantic-ui-react'
 // Context
 import { useForm } from '@util/hooks'
 import { AuthContext } from '@context/auth'
-import { PersistPrevLinkContext } from '@context/persistLinkContext'
 
 function Login(props) {
   // Use Context
   const { login } = useContext(AuthContext)
-  const { prevLink } = useContext(PersistPrevLinkContext) 
 
   const [errors, setErrors] = useState([])
   const initValue = { username: '', password: '' } 
@@ -19,7 +17,7 @@ function Login(props) {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       login(userData)
-      props.history.push(prevLink)
+      props.history.push('/posts')
     },
     onError(err) {
       setErrors(
@@ -72,7 +70,7 @@ function Login(props) {
 const LOGIN_USER = gql`
 mutation Login($username: String, $password: String) {
   login(username: $username, password: $password){
-    id username email token createdAt
+    id username email token createdAt avatarURL
   }
 }
 `
