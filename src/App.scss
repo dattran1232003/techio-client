@@ -1,11 +1,24 @@
 $base-color: #109c35;
 $green-color: #32a852;
 
+* {
+  --line-color: #d4d4d5;
+}
+
 @import 'scss/btn';
 
 h1, h2, h3, h4, h5, h6,
 span, p, strong {
   font-family: 'Open Sans', Roboto, sans-serif;
+}
+
+.text {
+  &--primary {
+    color: var(--primary-color)
+  }
+  &--highlighted {
+    color: var(--highlight-color)
+  }
 }
 
 .header {
@@ -15,8 +28,8 @@ span, p, strong {
     .user-button span { display: inline-block; color: #000000 !important; }
     &::before { // For seperate lines
       top: 50% !important;
-      transform: translateY(-50%) !important; 
       height: 60% !important;
+      transform: translateY(-50%) !important; 
     }
   }
   &__main-logo {
@@ -53,14 +66,37 @@ span, p, strong {
   
 }
 
+// Right column
+.rightcol {
+  &__container {
+    width: 85%;
+    margin: 0 0 auto auto;
+  }
+  &__item {
+    padding: 2rem 0;
+    background-color: #fff;
+    border-bottom: thin solid var(--line-color);
+    &:last-child {
+      border-bottom: none;
+    }
+    &--horizontal { 
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    &--grid {
+      display: inline-grid;
+    }
+  }
+}
+
+
 .paginate {
   width: 96%;
   margin: 0 auto !important;
   justify-content: center;
   border: none !important;
-  &__top {
-
-  }
+  &__top { }
   &__bottom {
     a.item.active {
       border-bottom: none !important;
@@ -74,7 +110,7 @@ span, p, strong {
   &__title {
     color: #32a852 !important;
     &--biggest {
-      font-size: 2.5rem;
+      font-size: 3rem;
     }
   }
 }

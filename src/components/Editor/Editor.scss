@@ -2,7 +2,6 @@
   margin-bottom: .3rem;
   &__container {
     margin-top: 1.5rem;
-    
   }
   &__text-box {
     width: 100%;
@@ -14,5 +13,26 @@
   }
   &__btn-container {
     margin-top: .6rem;
+  }
+}
+
+.wmde-markdown{
+  h1, h2 {
+    border-bottom: none !important;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .writting {
+    &__container {
+    }
+  }
+}
+
+@media screen and (min-width: 2056px) {
+  .writting {
+    &__container {
+      padding: 0;
+    }
   }
 }

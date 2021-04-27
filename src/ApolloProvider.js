@@ -5,6 +5,7 @@ import { setContext } from 'apollo-link-context'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { createUploadLink } from 'apollo-upload-client'
 import { getMainDefinition } from '@apollo/client/utilities'
+import { defaultDataIdFromObject } from '@apollo/client'
 import { 
   split,
   ApolloClient,
@@ -13,7 +14,17 @@ import {
 } from '@apollo/react-hooks'
 
 import { typePolicies } from './util/cacheTypePolicies'
-const cache = new InMemoryCache({ typePolicies })
+const cache = new InMemoryCache({ 
+  dataIdFromObject(resObject) {
+    const { id } = resObject
+    switch(resObject.__typename) {
+      case 'User': return `User:${resObject.username || id}`
+      case 'Post': return `Post:${resObject.plainTitle || id}`
+      default: return defaultDataIdFromObject(resObject)
+    }
+  },
+  typePolicies
+})
 
 
 const uploadLink = createUploadLink({

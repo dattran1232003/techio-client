@@ -3,9 +3,9 @@ import moment from 'moment'
 import { Loading } from '@components'
 import { Link } from 'react-router-dom'
 import LoadMorePost from './LoadMorePost'
-import {  GET_TOTAL, FETCH_POSTS_QUERY } from '@util/graphql'
 import { Image, Icon, Item, Grid } from 'semantic-ui-react'
 import { gql, useQuery, useSubscription } from '@apollo/react-hooks'
+import { CORE_USER_FIELDS, CORE_POST_FIELDS } from '../../util/graphqlFragments'
 
 import useNews from './useNews.jsx'
 
@@ -15,9 +15,8 @@ function NewsBox() {
     totalPosts: 0
   })
 
-  useQuery(GET_TOTAL, { 
-    variables: { model: 'Post' },
-    onCompleted({ getTotal: { count: total } }) {
+  useQuery(gql`{ totalPost }`, { 
+    onCompleted({ totalPost: total }) {
       dispatch({ type: 'LOAD_TOTAL', total })
     }
   })
@@ -51,58 +50,74 @@ function NewsBox() {
       { loading
         ? <Loading />
         : <>
-          { 
-            newsData.posts.map((post) => 
-              <SinglePost key={post.plainTitle} post={post}/>
-            )
-          }
+          { newsData.posts.map(post => 
+          <SinglePost key={post.plainTitle} post={post}/>
+          )}
 
           <LoadMorePost 
             disabled={newsData.posts.length >= newsData.total} 
             handleLoadMorePosts={handleLoadMorePosts} 
           />
-          </>
+        </>
       }
 
     </Grid>
   )
 }
 
-const SinglePost = 
-  ({ post: { title, plainTitle, shortBody, likeCount, commentCount, createdAt } }) => (
-    <Grid.Row columns={2} className='posts__single-post'>
-      <span className='posts__image'>
-        <Image loading='lazy' size='mini' avatar src='//picsum.photos/200' />
-      </span>
+const SinglePost = React.memo(function SinglePost (
+  { post: { title, plainTitle, shortBody, likeCount, commentCount, createdAt, user } }
+) { return (
+  <Grid.Row columns={2} className='posts__single-post'>
+    <span className='posts__image'>
+      <Image loading='lazy' size='mini' avatar src={user?.avatarURL} />
+    </span>
 
-      <Item className='posts__content'>
-        <Item.Header className='posts__header posts__header--headline'
-          as={Link} to={ `/posts/${plainTitle}` }
-        >{ title }</Item.Header>
+    <Item className='posts__content'>
+      <Item.Header className='posts__header posts__header--headline'
+        as={Link} to={ `/posts/${plainTitle}` }
+      >{ title }</Item.Header>
 
-        <Item.Meta className='posts__meta'
-        >{moment(createdAt).fromNow(true)}</Item.Meta>
+      <Item.Description className='posts__description'>{shortBody}</Item.Description>
 
-        <Item.Description className='posts__description'>{shortBody}</Item.Description>
+      <Item.Extra className='posts__button--wrapper'>
+        {likeCount} <Icon className='btn btn__in-post btn__like-post' name='thumbs up'/>
+        {commentCount} <Icon className='btn btn__in-post btn__comment-post' name='comments' />
+      </Item.Extra>
 
-        <Item.Extra className='posts__button--wrapper'>
-          {likeCount} <Icon className='btn btn__in-post btn__like-post' name='thumbs up'/>
-          {commentCount} <Icon className='btn btn__in-post btn__comment-post' name='comments' />
-        </Item.Extra>
-      </Item>
-    </Grid.Row>
-  )
+      <Item.Meta className='posts__meta' >
+        <span>
+          Viết bởi <Link to={ `profile/${user.username}` }>{user.username} </Link>
+        vào {moment(createdAt).fromNow()}
+        </span>
+      </Item.Meta>
+    </Item>
+  </Grid.Row>
+)}
+)
 
 
 const NEW_POST_SUBSCRIPTIONS = gql`
+  ${CORE_POST_FIELDS}
+  ${CORE_USER_FIELDS}
   subscription {
     publishPost {
-      id username shortBody title plainTitle likeCount commentCount createdAt
-      likes {
-        username
+      ...corePostFields
+      user {
+        ...coreUserFields
       }
-      comments {
-        id username body
+    }
+  }
+`
+
+const FETCH_POSTS_QUERY = gql`
+  ${CORE_POST_FIELDS}
+  ${CORE_USER_FIELDS}
+  query GetPosts($offset: Int!, $limit: Int) {
+    getPosts(offset: $offset, limit: $limit) {
+      ...corePostFields
+      user {
+        ...coreUserFields
       }
     }
   }

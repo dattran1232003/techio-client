@@ -1,11 +1,10 @@
+$item-margin: .5rem;
 $line-color: #d4d4d5;
 $text-secondary: #b0b0b0;
 $text-primary: rgba(0, 0, 0, .87);
 $background-trans-hover: rgba(0, 0, 0, .09);
 
 .posts {
-  &__container {
-  }
   &__single-post {
     padding-bottom: 0 !important;
     &::after {
@@ -13,7 +12,7 @@ $background-trans-hover: rgba(0, 0, 0, .09);
       display: block;
       width: 96%;
       margin: 1rem auto;
-      border-bottom: thin solid $line-color;
+      border-bottom: thin solid var(--line-color);
     }
   }
   &__content {
@@ -32,11 +31,21 @@ $background-trans-hover: rgba(0, 0, 0, .09);
       font-size: 1.2rem;      
     }
   }
-  &__meta {
-    color: $text-secondary;
-  }
   &__description {
     display: block;
+    margin-top: $item-margin;
+  }
+  &__button {
+    &--wrapper {
+      margin-top: $item-margin;
+    }
+  }
+  &__meta {
+    color: $text-secondary;
+    margin-top: $item-margin;
+    span {
+      font-size: .8rem;
+    }
   }
 }
 

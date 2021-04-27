@@ -48,13 +48,12 @@ function authReducer(state, action) {
 function AuthProvider(props) {
   const [state, dispatch] = useReducer(authReducer, initialState)
 
-  function login(userData) {
-    console.log(userData.avatarURL)
-    localStorage.setItem('jwtToken', userData.token)
-    localStorage.setItem('avatarURL', userData.avatarURL)
+  function login({ user, token }) {
+    localStorage.setItem('jwtToken', token)
+    localStorage.setItem('avatarURL', user.avatarURL)
     dispatch({
       type: 'LOGIN',
-      payload: userData
+      payload: user
     })
   }
 

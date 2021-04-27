@@ -1,9 +1,4 @@
 export const typePolicies = {
-  Post: {
-    keyFields({ id, plainTitle }) {
-      return 'Post:' + plainTitle ? plainTitle : id
-    },
-  },
   Query: {
     fields: {
       getPosts: {

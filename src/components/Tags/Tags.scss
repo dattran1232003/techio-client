@@ -1,0 +1,11 @@
+.tags {
+  &__container { }
+  &__item {
+    margin-right: .5rem !important;
+    margin-bottom: .5rem !important;
+    span { font-weight: 400; }
+    strong { font-weight: bolder; }
+  }
+}
+
+

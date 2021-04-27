@@ -3,7 +3,7 @@ import './AvatarUploader.scss'
 import ReactCrop from 'react-image-crop'
 import { Button } from 'semantic-ui-react'
 import { AuthContext } from '@context/auth'
-import 'react-image-crop/lib/ReactCrop.scss'
+import 'react-image-crop/dist/ReactCrop.css'
 import { gql, useMutation } from '@apollo/react-hooks'
 
 export default function AvatarUploader({ image, history, changeImage, cancelHandler }) {

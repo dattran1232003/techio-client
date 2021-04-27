@@ -1,12 +1,52 @@
-.writting__editbox-container {
-  span.token.title.important {
-      font-family: inherit;
-    .token.punctuation {
-      font-family: inherit;
+$border-line: thin solid transparentize(#000, .85);
+
+.writting {
+  &__editbox-container {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    border: $border-line;
+    border-radius: 10px;
+    overflow: auto;
+  }
+  &__editbox-child {
+    width: 50%;
+    resize: none;
+    min-width: 50%;
+    margin-bottom: 0;
+    &.image-over {
+      border: thick dashed transparentize(#696969, .6);
     }
   }
-  border: thick dashed transparentize(#696969, 1);
-  &.image-over {
-    border: thick dashed transparentize(#696969, .6);
+  &__editbox__editor {
+    height: 100%;
+    .react-codemirror2 {
+      height: 100%;
+    }
+    .CodeMirror {
+      height: 100%;
+      border-right: $border-line;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      padding-left: .5rem;
+      &-vscrollbar, &-hscrollbar {
+        display: none !important;
+      }
+    }
   }
+  &__editbox__previewer {
+    max-height: 100%;
+    padding-left: 1rem;
+    overflow-y: auto;
+  }
+}
+
+.resizer {
+  margin-bottom: 1rem;
+  div:not(:nth-child(3)) {
+    cursor: initial !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
 }

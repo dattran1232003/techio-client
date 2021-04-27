@@ -16,8 +16,7 @@ function reducer(state, action) {
         posts: [action.newPost, ...posts],
         total: total + 1
       }
-    default: 
-      return state
+    default: return state
   }
 }
 

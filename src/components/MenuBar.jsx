@@ -22,9 +22,12 @@ function MenuBar() {
   }), [])
 
   return (
-    <div className='header' >
-      <Menu inverted color='black'style={{ height: '4rem' }}>
-        <Menu.Item className='header__main-logo'>
+    <div className='header'>
+      <Menu inverted color='black' style={{ height: '4rem', borderRadius: 0 }}>
+        <Menu.Item className='header__main-logo' 
+          as={Link} to='/posts'
+          style={{ cursor: 'pointer' }}
+        >
           <span>Techio</span>
         </Menu.Item>
 
@@ -46,37 +49,37 @@ function MenuBar() {
             <Icon name='edit' />
             <span>Viết bài</span>
           </Menu.Item>
-          <Dropdown item text={ user?.username
-            ? <img src={user?.avatarURL} style={userAvatarStyle} /> 
-            : 'Menu'
+          <Dropdown item 
+            text={ user?.username
+              ? <img src={user?.avatarURL} style={userAvatarStyle} /> 
+              : 'Menu'
             }>
             <Dropdown.Menu>
-              { !user?.username
-                ? (
-                  <>
-                    <Dropdown.Item className='user-button'
-                      icon='user'
-                      as={Link} to='/register' 
-                      onClick={RedirectAuthHandle}
-                      name='register' text='Đăng ký' 
-                    />
-                    <Dropdown.Item className='user-button'
-                      icon='sign-in alternate' 
-                      as={Link} to='/login' 
-                      onClick={RedirectAuthHandle}
-                      name='login' text='Đăng nhập' 
-                    />
-                  </>
-                )
-                : (
-                  <Dropdown.Item className='user-button'
-                    as={Button} onClick={logout}
-                    icon='sign-out alternate' 
-                    name='logout' text='Đăng xuất' 
-                  />
-                )
+              { (!user.username && pathname !== '/register') &&
+                <Dropdown.Item className='user-button'
+                  icon='user'
+                  as={Link} to='/register' 
+                  onClick={RedirectAuthHandle}
+                  name='register' text='Đăng ký' 
+                />
               }
 
+              { (!user.username && pathname !== '/login') &&
+                <Dropdown.Item className='user-button'
+                  icon='sign-in alternate' 
+                  as={Link} to='/login' 
+                  onClick={RedirectAuthHandle}
+                  name='login' text='Đăng nhập' 
+                />
+              }
+
+              { user.username && 
+                <Dropdown.Item className='user-button'
+                  as={Button} onClick={logout}
+                  icon='sign-out alternate' 
+                  name='logout' text='Đăng xuất' 
+                />
+              }
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>

@@ -1,11 +1,47 @@
 .super {
   margin-top: 2rem;
-  margin-bottom: 2rem;
-
 }
  
 .post {
   &__header {
+    margin-top: 2rem;
+  }
+  &__tag {
+    margin-top: 2rem;
+  }
+  &__content {
+    padding: 1.4rem 1.3rem 1rem;
+    margin-top: 3rem;
+    border-radius: 12px;
+    background-color: transparentize(#e0e0e0, .8);
+  }
+  &__meta__writted-at {
+    color: var(--secondary-color);
+  }
+  &__author {
+    &__container {
+      display: flex;
+      flex-direction: row;
+    }
+    &__item {
+      margin-top: 2rem;
+
+    }
+    &__avatar {
+      height: auto;
+      width: 3.5rem;
+      border-radius: 50%;
+      margin-right: .5rem;
+    }
+    &__infor {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    &__name {
+      color: var(--primary-color);
+      font-size: clamp(1rem, 1.2vw, 1.4rem);
+    }
   }
 }
 

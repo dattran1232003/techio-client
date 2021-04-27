@@ -1,20 +1,39 @@
 .overview {
-  &__container {
-    width: 100%;
-  }
-  &__about-me {
-    width: 100%;
-    height: 10rem;
-  }
   &__avatar {
     width: 30%;
-    overflow: hidden;
-    border-radius: 50%;
-    background-size: 100%;
+    margin-right: 1rem;
     &::after {
       content: '';
       display: block;
+      overflow: hidden;
+      border-radius: 50%;
       padding-bottom: 100%;
+      background-size: 100%;
+      background-image: var(--user-avatar);
     }
+  }
+  &__username {
+    cursor: pointer;
+  }
+  &__textwrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &__text {
+    font-family: 'Open Sans';
+    &--primary {
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--highlight-color);
+    }     
+    &--secondary {
+      font-size: 1rem;
+    }     
+  }
+  &__header {
+    font-size: 1.2rem;
+    i { margin-right: 1rem; }
   }
 }

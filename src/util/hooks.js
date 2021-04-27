@@ -41,6 +41,21 @@ export const useRegister = ({ successCallback, errorCallback }) => {
   return { userData, registerUserToServer: trigger, loading }
 }
 
+export const useTags = (postPlainTitle='') => {
+  const sampleTags = React.useMemo(() => ([
+    { tagName: 'Python', used: 74 },
+    { tagName: 'Javascript', used: 106 },
+    { tagName: 'C#.net', used: 15 },
+    { tagName: 'CSS3', used: 43 },
+    { tagName: 'ReactJS', used: 105 },
+    { tagName: 'HTML5', used: 79 },
+    { tagName: 'C++', used: 164 },
+  ]), [])
+
+  return sampleTags
+}
+
+// graphql queries and mutations
 const REGISTER_MUTATION = gql`
   mutation Register(
     $email: String!
@@ -56,7 +71,8 @@ const REGISTER_MUTATION = gql`
       password: $password
       confirmPassword: $confirmPassword
     }) {
-      id token username 
+      user { username id }
+      token
     }
   }
 `

@@ -1,10 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 const NotFound = () => {
+  const containerClassName = useRef()
+
   useEffect(() => {
     const container = document.getElementsByClassName('ui container')[0]
+    containerClassName.current = container.className
     container.className += ' fluid'  
+    return function cleanUp() { 
+      container.className = containerClassName.current
+    }  
   }, [])
 
   return (

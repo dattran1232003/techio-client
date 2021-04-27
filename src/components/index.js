@@ -6,5 +6,6 @@ export { default as AuthRoute } from './AuthRoute'
 export { default as ProtectRoute } from './ProtectRoute'
 
 // Folder components
+export { default as Tags } from './Tags/Tags'
 export { default as Editor } from './Editor/Editor'
 export { default as UploadAvatar } from './UploadAvatar/UploadAvatar'

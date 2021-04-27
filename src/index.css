@@ -1,6 +1,5 @@
 /* autoprefixer grid: autoplace */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
-
 :root {
   --avatar-default: url("https://res.cloudinary.com/dd2ryr5fy/image/upload/v1617604774/techio/images/avatars/default-avatar_tnhdvp.png");
 }
@@ -36,6 +35,12 @@ code {
   height: 180px;
   margin-bottom: 20px;
   z-index: -1;
+}
+
+* {
+ --primary-color: rgba(41, 41, 41, 1);
+ --secondary-color: rgba(117, 117, 117, 1);
+ --highlight-color: #4183c4;
 }
 
 .notfound .notfound-404 h1 {

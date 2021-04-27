@@ -8,7 +8,10 @@ const NewPost = () => {
   const [postId, setPostId] = useState('')
   const { user } = useContext(AuthContext)
 
-  const [createNewPost, { loading, data }] = useMutation(CREATE_POST_MUTATION, {
+  const [createNewPost, { loading }] = useMutation(CREATE_POST_MUTATION, {
+    update(_, { data: { createPost: { id, plainTitle } } }) {
+      setPostId(plainTitle || id)
+    },
     onError(e) { console.error(e) },
     variables: { title: 'Title Here', body: '# Title' } 
   })
@@ -16,11 +19,6 @@ const NewPost = () => {
   useEffect(() => {
     if (user.username) createNewPost()
   }, [])
-
-  const id = data?.createPost?.id
-  useEffect(() => {
-    id && setPostId(id)
-  }, [id])
   
   return <>
     {!loading && (
@@ -34,7 +32,7 @@ const NewPost = () => {
 const CREATE_POST_MUTATION = gql`
   mutation CreatePost($body: String!) {
     createPost(body: $body) {
-      id
+      id plainTitle
     }
   }    
 `

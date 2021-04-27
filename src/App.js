@@ -1,3 +1,4 @@
+import 'moment/locale/vi'
 import React from 'react'
 import 'semantic-ui-css/semantic.min.css'
 import { AuthProvider } from '@context/auth'

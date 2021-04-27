@@ -1,14 +1,26 @@
 import './Editor.scss'
-import { Input, Button } from 'semantic-ui-react'
-import React, { useState, useEffect } from 'react'
-import { gql, useMutation } from '@apollo/react-hooks'
-
 import EditBox from './EditBox'
+import { Input, Button } from 'semantic-ui-react'
+import { gql, useMutation } from '@apollo/react-hooks'
+import React, { useState, useCallback, useEffect, useReducer } from 'react'
+
 
 const Editor = ({ oldPostData, history }) => {
-  const [postData, setPostData] = useState({ title: '', body: '', ...oldPostData  })
   const [isDraft, setIsDraft] = useState(oldPostData.draft)
+  const [postData, dispatch] = useReducer(
+    postDataReducer, 
+    { title: '', body: '', ...oldPostData }
+  )
 
+  function postDataReducer(state, { type, payload }) {
+    switch (type) {
+      case 'changeTitle': 
+        return { ...state, title: payload }
+      case 'changeBody': 
+        return { ...state, body: payload }
+      default: return state
+    }
+  }
 
   const [editPost, { loading, data }] = useMutation(EDIT_POST_MUTATION, {
     update(_, { data: { editPost: post } }) {
@@ -16,8 +28,13 @@ const Editor = ({ oldPostData, history }) => {
     }
   })
 
-  const onTitleChange  = (_, { value: title }) => setPostData({ ...postData, title })
-  const onEditorChange = body => setPostData({ ...postData, body })
+  const onTitleChange  = useCallback((_, { value: title }) => 
+    dispatch({ type: 'changeTitle', payload: title }), [])
+
+  const onEditorChange = useCallback(body => {
+    dispatch({ type: 'changeBody', payload: body }) 
+  }, [])
+  
 
   const editPostCallback = ({ postId, title, body }, { draft }) => e => {
     e.preventDefault()
@@ -38,7 +55,7 @@ const Editor = ({ oldPostData, history }) => {
         placeholder='Tiêu đề bài viết...'/>      
 
       <EditBox value={postData.body} onChange={onEditorChange} />
- 
+
       <div className='writting writting__btn-container'>
         { isDraft === true
           ? ( 

@@ -8,14 +8,7 @@ module.exports = {
       '@util': absolutePath('src/util/'),
       '@context': absolutePath('src/context/'),
       '@components': absolutePath('src/components/'),
+      '@fragments': absolutePath('src/util/apolloFragments.js'),
     },
   }, // #Webpack config
-  babel: {
-    plugins: [
-      [ // begin styleX plugin
-        "@ladifire-opensource/babel-plugin-transform-stylex",
-        { inject: true, },
-      ], // end styleX plugin
-    ]
-  }, // #Babel config
 }
