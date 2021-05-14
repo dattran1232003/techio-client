@@ -108,3 +108,7 @@ code {
       font-size: 182px;
   }
 }
+
+.blank_placeholder {
+  visibility: hidden !important;
+}

@@ -61,8 +61,9 @@ function EditBox(props) {
   }
 
   return (
-    <Resizable className='resizer' minWidth='100%' maxWidth='100%' defaultSize={{ height: 300 }}>
+    <Resizable className='resizer' minWidth='100%' maxWidth='100%' defaultSize={{ height: 500 }}>
       <div className={ `writting__editbox-container ${draggingOver ? 'image-over' : ''}` }>
+        { console.log('rerender') }
         <div className="writting writting__editbox-child writting__editbox__editor"
           {...{onDragOver, onDrop, onDragLeave}}
         >
@@ -88,13 +89,9 @@ const percentOf = base => num => num * 100 / base
 const breakLineMD = str => str.replace(/\n/g, '  \n')
 
 const scrollVerticalByPercent = (percent, elm) => {
-  if (percent < 100) {
     const { scrollHeight, clientHeight } = elm
     const scrollYpos = (scrollHeight - clientHeight) / 100 * percent
     elm.scroll(0, scrollYpos)
-  } else {
-    return 
-  }
 }
 
 const UPLOAD_PHOTO_MUTATION = gql`

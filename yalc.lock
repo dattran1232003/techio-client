@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "@dattr/react-responsive-component": {
+      "signature": "c266c1632a4f0e3551875cec9e004e4a",
+      "file": true
+    }
+  }
+}

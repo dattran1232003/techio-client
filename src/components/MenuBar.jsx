@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { AuthContext } from '../context/auth'
 import { Menu, Icon, Dropdown, Button } from 'semantic-ui-react'
 import { PersistPrevLinkContext } from '../context/persistLinkContext'
+import './MenuBar.scss'
 
 function MenuBar() {
   const { pathname } = useLocation()
@@ -14,8 +15,9 @@ function MenuBar() {
   const [activeItem, setActiveItem] = useState('home')
   const handleItemClick = (_, { name }) => setActiveItem(name)
 
-  const RedirectAuthHandle = _ => setPrevLink(pathname)
-  // Memo
+  const RedirectAuthHandle = _ => { 
+    !(['login', 'register'].includes(pathname)) && setPrevLink(pathname)
+  }  // Memo
   const userAvatarStyle = React.useMemo(() => ({
     padding: 3,
     borderRadius: '50%',
@@ -55,9 +57,17 @@ function MenuBar() {
               : 'Menu'
             }>
             <Dropdown.Menu>
+              { user.username &&
+                <Dropdown.Item 
+                  icon='user'
+                  as={Link} to={`/profile/${user.username}`}
+                  name='profile' text='Trang cá nhân'
+                />
+              }
+
               { (!user.username && pathname !== '/register') &&
                 <Dropdown.Item className='user-button'
-                  icon='user'
+                  icon='signup'
                   as={Link} to='/register' 
                   onClick={RedirectAuthHandle}
                   name='register' text='Đăng ký' 

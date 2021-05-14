@@ -1,5 +1,3 @@
-/* eslint react/prop-types: 0 */
-
 import React, { useContext } from 'react'
 import { AuthContext } from '@context/auth'
 import { Route, Redirect } from 'react-router-dom'

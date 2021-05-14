@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
 import { Grid, Menu, Ref } from 'semantic-ui-react'
-import useResponsive from '@util/hooks-responsive'
 
 import NewsBox from './NewsBox'
 import RightMenu from './RightMenu'
 
 function Home() {
-  const { width, height } = useResponsive()
-  console.log({ width, height })
   const contextRef = React.useRef()
   const [tabName, setTabname] = useState('posts-recent')
   const handleSwitchTab = (_, { name }) => setTabname(name)

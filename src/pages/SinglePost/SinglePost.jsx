@@ -50,7 +50,9 @@ const SinglePost = () => {
               />
 
               <div className="post post__author__item post__author__infor">
-                <span className="post post__author__name">{writter.username}</span>
+                <Link to={`/profile/${writter.username}`} className="post post__author__name"
+                >{writter.username}</Link>
+
                 <span className="post post__meta post__meta__writted-at"
                 >{postDate(createdAt)}</span>
               </div>

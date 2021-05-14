@@ -1,0 +1,59 @@
+.profile {
+  &__container {
+    display: flex;
+    margin-top: 10vh;
+    align-items: center;
+    width: 100% important;
+    justify-content: space-between;
+  }
+
+  &__item {
+    width: 100%;
+  }
+
+  &__statistics {
+    text-align: center;
+  }
+
+  &__about-user {
+    &--container {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
+  &__avatar {
+    padding: 2px;
+    border-radius: 50%;
+    display: inline-block;
+    // border: thin solid transparentize(grey, .3);
+    box-shadow: 0 0 15px -9px;
+    img { margin: .10rem !important; }
+  }
+}
+
+/*== Small Tablet ==*/
+@media only screen and (min-width: 480px) {
+  .profile {
+    &__item {
+      width: 45%;
+    }
+  }
+}
+
+/*== Ipad ==*/
+@media only screen and (min-width: 768px) {
+  .profile {
+  }
+}
+
+/*== Laptop ==*/
+@media only screen and (min-width: 1024px) {
+  .profile {
+    &__item {
+      width: 30%;
+    }
+  }
+}
+

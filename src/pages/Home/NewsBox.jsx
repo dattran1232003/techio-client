@@ -36,7 +36,7 @@ function NewsBox() {
     posts.length > 0 && dispatch({ type: 'LOAD_POSTS', posts })
   }, [posts])
 
-  const handleLoadMorePosts = React.useCallback(_ => { 
+  const loadMorePosts = React.useCallback(_ => { 
     fetchMore({
       variables: { 
         offset: newsData.posts?.length || 0,
@@ -44,9 +44,23 @@ function NewsBox() {
       },
     })
   }, [newsData.posts?.length])
+  
+  React.useLayoutEffect(() => {
+  const isBottom = (el) => 
+    el.getBoundingClientRect().bottom <= window.innerHeight
+
+    const loadMorePostOnScrollToBottom = () => {
+      const wrapper = document.getElementById('posts-container')
+      if(isBottom(wrapper)) loadMorePosts()
+    }
+
+    document.addEventListener('scroll', loadMorePostOnScrollToBottom)
+
+    return () => document.removeEventListener('scroll', loadMorePostOnScrollToBottom)
+  }, [newsData.posts?.length])
 
   return (
-    <Grid className='posts posts__container'>
+    <Grid id='posts-container' className='posts posts__container'>
       { loading
         ? <Loading />
         : <>
@@ -56,7 +70,7 @@ function NewsBox() {
 
           <LoadMorePost 
             disabled={newsData.posts.length >= newsData.total} 
-            handleLoadMorePosts={handleLoadMorePosts} 
+            loadMorePosts={loadMorePosts} 
           />
         </>
       }

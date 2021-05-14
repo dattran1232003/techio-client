@@ -38,6 +38,7 @@ $border-line: thin solid transparentize(#000, .85);
     max-height: 100%;
     padding-left: 1rem;
     overflow-y: auto;
+    img { margin: 0 auto; max-width: 95%; }
   }
 }
 

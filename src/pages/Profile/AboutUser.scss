@@ -1,0 +1,32 @@
+.profile {
+  &__basic-info {
+    text-align: center;
+
+    width: 100%;
+    margin-bottom: 1.25rem !important;
+
+    h2 { margin-top: .25rem !important; }
+  }
+}
+
+.statistic {
+  &__three-col{
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+  }
+  &__col {
+    display: inline-flex;
+    justify-content: space-between;
+
+    margin: 0 !important;
+    width: calc(100% / 2.5);
+
+    text-align: center;
+  }
+  &__divider {
+    height: 3rem;
+    align-self: flex-end;
+    border-right: thin solid transparentize(grey, .3);
+  }
+}

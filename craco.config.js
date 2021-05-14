@@ -4,6 +4,7 @@ const absolutePath = path.resolve.bind(this, __dirname)
 module.exports = {
   webpack: {
     alias: {
+      'react': absolutePath('./node_modules/react'),
       '@app': absolutePath('src/'),
       '@util': absolutePath('src/util/'),
       '@context': absolutePath('src/context/'),

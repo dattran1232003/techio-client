@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "react": ["./node_modules/react"],
+      "@app": ["./src/"],
+      "@util": ["./src/util/"],
+      "@context": ["./src/context/"],
+      "@components": ["./src/components/"],
+      "@fragments": ["./src/util/apolloFragments.js"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
