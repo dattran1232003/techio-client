@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { useState, useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -22,6 +23,9 @@ function MenuBar() {
     padding: 3,
     borderRadius: '50%',
   }), [])
+
+  // Hack to disable warning for Dropdown's text props when passing <img ... /> instead of string
+  Object.assign(Dropdown.propTypes, { text: PropTypes.node })
 
   return (
     <div className='header'>

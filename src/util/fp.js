@@ -1,23 +1,39 @@
-import { curryN } from 'ramda'
+import { 
+  isNil,
+  ifElse,
+  complement,
+} from 'ramda'
 
-export function Just(v) {
-  return {
-    map(fn) { return Just(fn(v)) },
-    flatMap(fn) { return fn(v) },
-    unwrap() { return v }
-  }
-} 
+const Just = v => ({
+  map:     fn => Just(fn(v)),
+  flatMap: fn => fn(v),
+  inspect: _  => `Just(${v})`,
+  unwrap:  _  => v,
+}) 
 
-export function Nothing() {
-  return {
-    map() { return Nothing() },
-    flatMap() { return Nothing() },
-    unwrap() { return null }
-  }
-}
-
-export const getProp = curryN(2, function(propName, obj) {
-  return obj[propName] ? Just(obj[propName]) : Nothing()  
+const Nothing = _ => ({
+  map:     _ => Nothing(),
+  flatMap: _ => Nothing(),
+  inspect: _ => `Nothing`,
+  unwrap:  _ => null 
 })
 
-export * from 'ramda'
+export const isNotNil = complement(isNil)
+
+const maybeOf = {
+  of: ifElse(isNotNil, Just, Nothing),
+  Just: Just,
+  Nothing: Nothing
+}
+
+export { maybeOf as Maybe }
+
+
+export const TypeBox = (predicate, defaultValue) => {
+  const TypePredicate = v => ({
+    map: fn => TypePredicate(predicate(v) ? fn(v) : defaultValue),
+    unwrap: _ => v
+  })
+
+  return TypePredicate
+}

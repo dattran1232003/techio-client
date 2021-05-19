@@ -1,4 +1,4 @@
-import { ifElse } from '@util/fp'
+import { ifElse } from 'ramda'
 import jwtDecode from 'jwt-decode'
 import React, { useReducer, createContext } from 'react'
 

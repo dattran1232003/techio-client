@@ -36,6 +36,9 @@
 /*== Small Tablet ==*/
 @media only screen and (min-width: 480px) {
   .profile {
+    &__container {
+      justify-content: space-around;
+    }
     &__item {
       width: 45%;
     }
@@ -52,7 +55,7 @@
 @media only screen and (min-width: 1024px) {
   .profile {
     &__item {
-      width: 30%;
+      width: 33%;
     }
   }
 }

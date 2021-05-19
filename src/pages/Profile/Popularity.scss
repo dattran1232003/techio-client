@@ -1,0 +1,40 @@
+$avatar-space: .7rem;
+
+.popularity {
+  /* Layout divide */
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  &__item {
+    margin-bottom: 1.2rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  /* Childrens detail */
+  &__description {
+    font-size: 1.25rem;
+  }
+
+  &__avatars {
+    display: grid;
+    grid-gap: $avatar-space;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    img {
+      cursor: pointer;
+
+      margin-right: 0 !important;
+
+      transition: box-shadow .2s;
+      box-shadow: none;
+      &:hover { 
+        box-shadow: 0 0 10px -5px;
+      }
+    }
+  }
+
+}

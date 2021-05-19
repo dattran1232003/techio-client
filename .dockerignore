@@ -1,0 +1,9 @@
+/* dependencies */
+node_modules
+
+/* OS */
+.DS_Store
+
+/* git directory */
+.git
+.gitignore

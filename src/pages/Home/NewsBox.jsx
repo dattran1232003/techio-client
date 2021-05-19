@@ -46,17 +46,17 @@ function NewsBox() {
   }, [newsData.posts?.length])
   
   React.useLayoutEffect(() => {
-  const isBottom = (el) => 
-    el.getBoundingClientRect().bottom <= window.innerHeight
+    const nearToBottom = (el, px=350) =>
+      (el.getBoundingClientRect().bottom - px) <= window.innerHeight
 
-    const loadMorePostOnScrollToBottom = () => {
-      const wrapper = document.getElementById('posts-container')
-      if(isBottom(wrapper)) loadMorePosts()
+    const loadMorePostOnHitBottom = () => {
+      const postsWrapper = document.getElementById('posts-container')
+      if(nearToBottom(postsWrapper)) loadMorePosts()
     }
 
-    document.addEventListener('scroll', loadMorePostOnScrollToBottom)
+    document.addEventListener('scroll', loadMorePostOnHitBottom)
 
-    return () => document.removeEventListener('scroll', loadMorePostOnScrollToBottom)
+    return () => document.removeEventListener('scroll', loadMorePostOnHitBottom)
   }, [newsData.posts?.length])
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
-import { useFollow } from './hooks'
 import { AuthContext } from '@context/auth'
 import { useParams } from 'react-router-dom'
+import { useFollow, useFollowers } from './hooks'
 import { Tablet, Laptop } from '@dattr/react-responsive'
 
 import './Profile.scss'
@@ -15,6 +15,7 @@ function Profile() {
   const { user: { avatarURL } } = React.useContext(AuthContext)
 
   // custom hooks
+  const [followers] = useFollowers({ username })
   const [isFollowing, { followToggle }] = useFollow({ username })
 
   return (
@@ -26,9 +27,9 @@ function Profile() {
         />
       </div>
 
-      <Tablet only>
-        <div className="profile profile__item popularity">
-          <Popularity users={[]}/>
+      <Tablet only andUp>
+        <div className="profile profile__item">
+          <Popularity followers={followers} thisGuyUsername={username}/>
         </div>
       </Tablet>
 

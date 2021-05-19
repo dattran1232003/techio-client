@@ -1,4 +1,13 @@
 export const typePolicies = {
+  User: {
+    fields: {
+      followers: {
+        merge(_, incoming) {
+          return incoming
+        }
+      }
+    }
+  },
   Query: {
     fields: {
       getPosts: {
